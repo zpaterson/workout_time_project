@@ -12,14 +12,56 @@ Tech Stack: React, Bootstrap, Express, Node, PostgreSQl
 
 Step By Step to get Started
 
-Application
-1. Fork this Repo and git clone into your local desktop
-2. Run npm install or yarn start
+PostgresSQL Database Setup:
+Download PostgresSQL https://www.postgresql.org/
 
-Data Base
-1. Download PostgresSQL https://www.postgresql.org/
+Open Terminal, and enter the following commands:
 
-Current Feature list
+```
+psql workoutTime
+create database workout_time;
+
+CREATE TABLE users (
+	id SERIAL PRIMARY KEY NOT NULL,
+  first_name VARCHAR(40)
+);
+
+
+CREATE TABLE preferences (
+	id SERIAL PRIMARY KEY NOT NULL,
+	user_id SERIAL REFERENCES users(id),
+	time_of_day VARCHAR(40),
+	days_per_week INTEGER,
+	hours_per_week INTEGER,
+	date_created TIMESTAMP WITH TIMEZONE
+);
+
+```
+
+Application Setup:
+
+1. Go onto your desktop and then clone this repo to your local machine
+   cd desktop and git clone https://github.com/zpaterson/workout_time_project
+
+2. Go into that project folder
+   cd workout-time-project
+
+3. Install all dependencies
+
+   go into into server folder 
+   ```
+    cd server 
+    npm install 
+    npm start \\ to start the Express server
+   ```
+   go into into client folder 
+   ```
+    cd client
+    npm install 
+    npm start \\ to start the React app
+   ```   
+
+Current Features list
 
 Backend
 * Running Express Server
