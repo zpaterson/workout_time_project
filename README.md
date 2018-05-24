@@ -12,7 +12,7 @@ Tech Stack: React, Bootstrap, Express, Node, PostgreSQl
   https://github.com/Techtonica/curriculum/blob/master/projects/final-project/final-project.md
 
 * Project Prep Doc:
-  https://docs.google.com/document/d/1IMB1hRjxAjNe0VZ3nIze7-p2CBnpvkHwPQGuCClmwZs/edit
+  https://docs.google.com/document/d/1IMB1hRjxAjNe0VZ3nIze7-p2CBnpvkHwPQGuCClmwZs
 
 * This project was bootstrapped with Create React App & Express-Generator: 
   https://github.com/facebookincubator/create-react-app
