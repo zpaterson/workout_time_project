@@ -68,17 +68,7 @@ CREATE TABLE preferences (
     npm start \\ to start the React app
    ```   
 ----
-## Current Features list
-
-### Frontend
-* Running Create-React-App
-* Hard coded data is displayed on the site  
-
-### Backend
-* Running Express Server
-* Hard coded data can be inserted into the PostgresSQL database 
-
-### Later Features List
+## Features list
 * Google Calendar API integration
 * Free time calculation 
 * Workout time suggestion
