@@ -8,15 +8,15 @@ Tech Stack: React, Bootstrap, Express, Node, PostgreSQl
 
 ---
 
-##### This project is based on Techtonica's Final Project Guidelines:
-     https://github.com/Techtonica/curriculum/blob/master/projects/final-project/final-project.md
+* This project is based on Techtonica's Final Project Guidelines:	       	
+  https://github.com/Techtonica/curriculum/blob/master/projects/final-project/final-project.md
 
-##### Project Prep Doc: 
-     https://docs.google.com/document/d/1IMB1hRjxAjNe0VZ3nIze7-p2CBnpvkHwPQGuCClmwZs/edit
+* Project Prep Doc:
+  https://docs.google.com/document/d/1IMB1hRjxAjNe0VZ3nIze7-p2CBnpvkHwPQGuCClmwZs/edit
 
-##### This project was bootstrapped with Create React App & Express-Generator 
-     https://github.com/facebookincubator/create-react-app
-     https://www.npmjs.com/package/express-generator
+* This project was bootstrapped with Create React App & Express-Generator: 
+  https://github.com/facebookincubator/create-react-app
+  https://www.npmjs.com/package/express-generator
 
 
 ---
