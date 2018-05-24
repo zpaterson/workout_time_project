@@ -16,10 +16,10 @@ https://docs.google.com/document/d/1IMB1hRjxAjNe0VZ3nIze7-p2CBnpvkHwPQGuCClmwZs/
 https://github.com/facebookincubator/create-react-app
 https://www.npmjs.com/package/express-generator
 
+
+#### Step By Step to get Started
+
 ---
-### Step By Step to get Started
-
-
 ## PostgresSQL Database Setup:
 Download PostgresSQL https://www.postgresql.org/
 
