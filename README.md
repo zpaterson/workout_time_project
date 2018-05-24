@@ -1,6 +1,6 @@
-# H1 WorkoutTime 
+# WorkoutTime 
 
-### H3 By Zaire Paterson 
+### By Zaire Paterson 
 
 WorkoutTime is a web app that helps you plan your next workout effortlessly. It imports your Google calendar data to calculate your free time, and suggests workout times based on your preferences, then you just click to add the suggested workouts that work for you.
 Tech Stack: React, Bootstrap, Express, Node, PostgreSQl
@@ -11,7 +11,7 @@ Tech Stack: React, Bootstrap, Express, Node, PostgreSQl
 * This project was bootstrapped with Create React Apphttps://github.com/facebookincubator/create-react-app
 
 ---
-## H2 Step By Step to get Started
+## Step By Step to get Started
 
 PostgresSQL Database Setup:
 Download PostgresSQL https://www.postgresql.org/
@@ -39,7 +39,7 @@ CREATE TABLE preferences (
 
 ```
 ----
-## H2 Application Setup:
+## Application Setup:
 
 1. Go onto your desktop and then clone this repo to your local machine
    cd desktop and git clone https://github.com/zpaterson/workout_time_project
@@ -62,13 +62,13 @@ CREATE TABLE preferences (
     npm start \\ to start the React app
    ```   
 ----
-## H2 Current Features list
+## Current Features list
 
-### H3 Backend
+### Backend
 * Running Express Server
 * Hard Coded Data Display and being sent to PostgresSQL database 
 
-### H3 Later Features List
+### Later Features List
 * Google Calendar API integration
 * Free time calculation 
 * Workout time suggestion
