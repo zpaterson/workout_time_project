@@ -76,7 +76,7 @@ CREATE TABLE preferences (
 
 ### Backend
 * Running Express Server
-* Hard coded data can be sent to PostgresSQL database 
+* Hard coded data can be inserted into the PostgresSQL database 
 
 ### Later Features List
 * Google Calendar API integration
