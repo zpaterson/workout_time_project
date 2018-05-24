@@ -29,7 +29,7 @@ psql workoutTime
 create database workout_time;
 
 CREATE TABLE users (
-	id SERIAL PRIMARY KEY NOT NULL,
+  id SERIAL PRIMARY KEY NOT NULL,
   first_name VARCHAR(40)
 );
 
