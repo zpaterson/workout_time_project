@@ -19,7 +19,7 @@ https://www.npmjs.com/package/express-generator
 ---
 ## Step By Step to get Started
 
-PostgresSQL Database Setup:
+## PostgresSQL Database Setup:
 Download PostgresSQL https://www.postgresql.org/
 
 Open Terminal, and enter the following commands:
