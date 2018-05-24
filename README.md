@@ -72,4 +72,4 @@ CREATE TABLE preferences (
 * Google Calendar API integration
 * Free time calculation 
 * Workout time suggestion
-* Posting events to users Google Calendar 
+* Posting events to user's Google Calendar 
