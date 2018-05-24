@@ -70,9 +70,13 @@ CREATE TABLE preferences (
 ----
 ## Current Features list
 
+### Frontend
+* Running Create-React-App
+* Hard coded data is displayed on the site  
+
 ### Backend
 * Running Express Server
-* Hard Coded Data Display and being sent to PostgresSQL database 
+* Hard coded data can be sent to PostgresSQL database 
 
 ### Later Features List
 * Google Calendar API integration
