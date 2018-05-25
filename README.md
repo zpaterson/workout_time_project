@@ -26,23 +26,29 @@ Download PostgresSQL https://www.postgresql.org/
 Open Terminal, and enter the following commands:
 
 ```
-psql workoutTime
-create database workout_time;
+//creating the database
 
-CREATE TABLE users (
-  id SERIAL PRIMARY KEY NOT NULL,
-  first_name VARCHAR(40)
-);
+# Note: you may get a "Permission denied" error and need to grant permission via a chmod command.
 
+cd workout-time-project
+./create_db_script.sh 
 
-CREATE TABLE preferences (
-	id SERIAL PRIMARY KEY NOT NULL,
-	user_id SERIAL REFERENCES users(id),
-	time_of_day VARCHAR(40),
-	days_per_week INTEGER,
-	hours_per_week INTEGER,
-	date_created TIMESTAMP WITH TIMEZONE
-);
+//if you get "Permission denied" error enter this command:
+
+chmod +rwx ./create_db_script.sh
+./create_db_script.sh
+
+----------------------------------
+
+// deleting the database
+
+cd workout-time-project
+./teardown_db_script.sh 
+
+//if you get "Permission denied" error enter this command:
+
+chmod +rwx ./teardown_db_script.sh
+./teardown_db_script.sh
 
 ```
 ----
