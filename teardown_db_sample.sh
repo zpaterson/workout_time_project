@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set variables
-database_name='tester_db'
+database_name='workout_time'
 table1_name='users'
 table2_name='preferences'
 
