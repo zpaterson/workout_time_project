@@ -24,16 +24,12 @@ Tech Stack: React, Bootstrap, Express, Node, PostgreSQl
 Download PostgresSQL https://www.postgresql.org/
 
 Open Terminal, and enter the following commands:
-
+##### Note: if you get a "Permission denied" error use the chmod command below:
 ```
 //creating the database
 
-# Note: you may get a "Permission denied" error and need to grant permission via a chmod command.
-
 cd workout-time-project
 ./create_db_script.sh 
-
-//if you get "Permission denied" error enter this command:
 
 chmod +rwx ./create_db_script.sh
 ./create_db_script.sh
@@ -41,11 +37,9 @@ chmod +rwx ./create_db_script.sh
 ----------------------------------
 
 // deleting the database
-
+  
 cd workout-time-project
 ./teardown_db_script.sh 
-
-//if you get "Permission denied" error enter this command:
 
 chmod +rwx ./teardown_db_script.sh
 ./teardown_db_script.sh
