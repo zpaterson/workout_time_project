@@ -98,15 +98,62 @@ function listUpcomingEvents() {
     'timeMin': (new Date()).toISOString(),
     'showDeleted': false,
     'singleEvents': true,
-    'maxResults': 20,
+    'maxResults': 40,
     'orderBy': 'startTime'
-  }).then(function(response) {
-    var events = response.result.items;
-    for(var i in events) {
-      var startTime = events[i].start.dateTime;
-       var endTime = events[i].end.dateTime;
-      console.log('this is event: ' + i + ' ' + startTime + ' ' + endTime + '\n');
+  }).then(function (response) {
+
+    let events = response.result.items;
+    calculateIfDateIsInWeek();
+
+    //determines if a calendar event is within the specified week, if it is, it calls the 
+    //calculateEventDuration function to calculate the duration of each event, otherwise it doesn't do anything
+    function calculateIfDateIsInWeek() {
+      let start, end, isInWeek, totalTime = 0;
+      let startOfWeek = events[0].start.dateTime;
+      let endOfWeek = moment(startOfWeek).add(7, 'days');
+
+      for (var i in events) {
+        start = events[i].start.dateTime;
+        end = events[i].end.dateTime;
+        
+        isInWeek = moment(start).isBetween(startOfWeek, endOfWeek);
+        //isInWeek = moment('2018-05-25T22:00:00-07:00').isBetween(startOfWeek, endOfWeek);
+        let totalCalTime = calculateEventDuration(isInWeek);
+      }
+    
+      //calculates the duration of each calendar event that's within the specified week 
+      function calculateEventDuration(isInWeek) {
+        if (isInWeek) {
+          let duration = moment.duration(moment(end).diff(start));
+          let minutes = duration.asMinutes();
+          let timeFrame;
+          
+          totalTime += minutes;
+
+          if (minutes > 60) {
+            timeFrame = duration.asHours() + ' hours';
+          }
+          else {
+            timeFrame = minutes + ' minutes';
+          }
+          console.log('this is event: ' + i + '\n start time: ' + start + ' --- end time: ' + end + '\n and the event is: ' + timeFrame + ' long \n');
+          calculateTotalFreeTime();
+          return totalTime;
+        }
+      } 
+      
+      //calculates the total free time a user has for a specified week
+      function calculateTotalFreeTime() {
+        let sleepTime = 8;
+        let minsInWeek = 10080 - sleepTime;
+        let totalFreeTime = (minsInWeek - totalTime) / 60;
+
+        console.log('You have ' + (Math.round(10 * totalFreeTime) / 10) + ' hours of free time this week');
+      }
+
+      console.log(totalTime);
     }
+
     appendPre('Upcoming events:');
 
     if (events.length > 0) {
@@ -123,6 +170,3 @@ function listUpcomingEvents() {
     }
   });
 }
-
-// var m = moment().format();
-// console.log(m);
