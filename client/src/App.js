@@ -2,7 +2,9 @@
 import React, { Component } from 'react';
 //import logo from './logo.svg';
 import './App.css';
+import moment from 'moment';
 import config from './config';
+import CalculateTime from './CalculateTime';
 
 var CLIENT_ID = config.CLIENT_ID;
 var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
@@ -14,7 +16,9 @@ class App extends React.Component {
     this.state = {
       showAuthButton: false,
       showSignOutButton: false,
-      events: []
+      event: [],
+      start: null ,
+      end: null,
     };
     this.initClient = this.initClient.bind(this);
     this.updateSigninStatus = this.updateSigninStatus.bind(this);
@@ -75,9 +79,11 @@ class App extends React.Component {
     'maxResults': 40,
     'orderBy': 'startTime'
   }).then(function (response) {
-     let events = response.result.items;
-     this.setState({events: events.summary});
-     console.log(this.state.events);
+     let event = response.result.items;
+       this.setState({
+         event: event
+       })
+     console.log(this.state.event);
   }.bind(this));
 }
   componentDidMount() {
@@ -86,12 +92,24 @@ class App extends React.Component {
   render() {
     let authButton = <button id="authorize-button" onClick={this.handleAuthClick.bind(this)}>Authorize</button>
     let signOutButton = <button id="signout-button" onClick={this.handleSignoutClick.bind(this)}>Sign Out</button>
+    //console.log(this.state.event);
     return (
       <div className="container">
        <h1>Display Events</h1>
         {this.state.showAuthButton ? authButton : null}
         {this.state.showSignOutButton ? signOutButton : null}
-        {this.state.events}
+        <ul>
+          {this.state.event.map(event  => 
+            <li key={event.id}>
+              <p>{event.summary}</p>
+              <p>start-time: {event.start.dateTime} –– end-time: {event.end.dateTime}</p>
+            </li>
+        )}
+        </ul>
+
+        <CalculateTime events={this.state.event}/>
+
+        
       </div>
     )
   }
