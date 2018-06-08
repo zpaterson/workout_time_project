@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import './App.css';
 import SuggestedTimes from './SuggestedTimes';
 import CalculateTime from './CalculateTime';
+import Schedule from './schedule';
 
 export default class PreferencesForm extends Component {
     constructor(props) {
@@ -41,7 +42,7 @@ render() {
     console.log(this.props.schedule);
         return (
             <div>
-                {/* <CalculateTime logIn={true} freeTime={this.state.results} /> */}
+                <CalculateTime freeTime={this.props.schedule.totalFreeTimePerWeek} />
                 <h1>Tell us about when you want to workout</h1>
                 <form>
                     <p>Please type how many hours you want to workout this week:</p>

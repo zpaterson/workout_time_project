@@ -1,6 +1,7 @@
 import moment from 'moment';
 import Day from './day';
 
+
 export default class Schedule {
     constructor(eventsArray) {
         this.eventsArray = eventsArray;
@@ -16,7 +17,6 @@ export default class Schedule {
         this.eventsArray.forEach(event => {
             let duration = moment.duration(moment(event.end.dateTime).diff(event.start.dateTime)).asMinutes();
             totalTime += duration;
-            this.totalFreeTimePerWeek = totalTime;
 
             let eventObj = {
                 summary: event.summary,
@@ -30,15 +30,22 @@ export default class Schedule {
             //console.log('duration: ', duration)
         });
         
-        console.log('total time: ', this.totalFreeTimePerWeek);
         //console.log("eventsArray:", eventsArray);
-        this.calculateFreeTimePerWeek(this.totalFreeTimePerWeek);
+        
+        let totalMinsInAWeek = this.calculateTotalMinsInAWeek()
+        this.calculateTotalFreeTimePerWeek(totalMinsInAWeek, totalTime);
         this.calculateEventsPerDay(eventsArray)
-
+        
     }
-
-    calculateFreeTimePerWeek(totalFreeTimePerWeek) {
-            
+    
+    calculateTotalMinsInAWeek() {
+        let sleepTime = 8;
+        let numMinsInAWeek = 10080;
+        return numMinsInAWeek - sleepTime;
+    }
+    
+    calculateTotalFreeTimePerWeek(totalMinsInAWeek, totalTime) {
+        this.totalFreeTimePerWeek = Math.round(((totalMinsInAWeek - totalTime) / 60));
     }
 
     calculateEventsPerDay(eventsArray) {

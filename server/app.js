@@ -13,8 +13,8 @@ const bodyParser = require('body-parser')
 const passport = require('passport')
 
 
-// var indexRouter = require('./routes/index');
-// var usersRouter = require('./routes/users');
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -28,8 +28,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use('/', indexRouter);
-// app.use('/users', usersRouter);
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
@@ -56,6 +56,10 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+// app.get('/',( req, res) => res.status(200).send ({
+//   message: 'Welcome to Express Index',
+// }));
 
 /////////////
 // DATABASE //

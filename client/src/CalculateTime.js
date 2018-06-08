@@ -8,8 +8,12 @@ export default class CalculateTime extends Component {
 
     render() {    
         return (
-
-            <p>You have {this.props.freeTime} hours of free time this week!</p>
+            <div>
+                <h1>Great, based your schedule you have: </h1> 
+                <h3>{this.props.freeTime} hours of free time this week!</h3>
+                <br/>
+                <br/>
+            </div>
         )
 
     }

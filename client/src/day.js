@@ -10,45 +10,53 @@ export default class Day {
         let keyList;
 
         for (let key in eventsPerDay) {
-
             if (eventsPerDay.hasOwnProperty(key)) {
-                // keyArr.push(key);
-                // keyList = keyArr;
-                this.calculateTimeFramePerDay(eventsPerDay[key], key);
+                this.calculateGapsBetweenEventsPerDay(eventsPerDay[key], key);
             }
-            //console.log(key);
         }
-        //console.log(eventsPerDay);
     }
 
-    calculateTimeFramePerDay(singleDayEvents, key) {
+    startOfDay(day) {
+        return moment(day).minutes(0).hours(4);
+    }
 
-        let startOfEachDay = moment(singleDayEvents[0].startTime).minutes(0).hours(4);
-        let endOfEachDay = moment(singleDayEvents[0].endTime).minutes(0).hours(21);;
+    endOfDay(day) {
+        return moment(day).minutes(0).hours(21);
+    }
+
+    timeBeforeEvent(event) {
+        const dayStart = this.startOfDay(event);
+        return moment.duration(moment(event).diff(dayStart)).asMinutes();
+    }
+
+    remainingTimeAfterEvent(event) {
+        const endOfTheDay = this.endOfDay(event);
+        return moment.duration(moment(endOfTheDay).diff(event)).asMinutes();
+    }
+
+    timeBetweenTwoEvents(endOfFristEvent, startOfSecondEvent) {
+        return duration = moment.duration(moment(startOfSecondEvent).diff(endOfFristEvent)).asMinutes();
+    }
+
+    suggestedWorkoutTimesByDay() {
+        let morningWorkoutTime, midDayWorkoutTime, eveningWorkoutTime;
+    }
+
+
+    
+    
+    timeBetweenEventsInADay(singleDayEvents, key) {
 
         let lastElement = singleDayEvents.length - 1;
-        let timeBeforeFirstEvent = moment.duration(moment(singleDayEvents[0].startTime).diff(startOfEachDay)).asMinutes();
-        let timeAfterLastEvent = moment.duration(moment(endOfEachDay).diff(singleDayEvents[lastElement].endTime)).asMinutes();
-
-
-        //console.log(singleDayEvents);
-        // console.log(singleDayEvents[0].summary + ' --- ' +  timeBeforeFirstEvent);
-        // console.log(singleDayEvents[lastElement].summary + ' --- ' + timeAfterLastEvent);
-
-        let duration = 0;
-        let morningWorkoutTime, midDayWorkoutTime, eveningWorkoutTime;
+        let timeBeforeFirstEvent = this.timeBeforeEvent(singleDayEvents[0].startTime);
+        let timeAfterLastEvent = this.remainingTimeAfterEvent(singleDayEvents[lastElement].endTime);
+        
+            
         if (singleDayEvents.length > 1) {
-
+            
             for (let i = 0; i < lastElement; i++) {
-
                 duration = moment.duration(moment(singleDayEvents[i + 1].startTime).diff(singleDayEvents[i].endTime)).asMinutes();
-
-                //console.log(singleDayEvents[i + 1].summary + ': ' + singleDayEvents[i + 1].startTime + ' --- ' + singleDayEvents[i].summary + ': ' + singleDayEvents[i].endTime);
-
-                //console.log(duration + '\n');
-                if (duration > 40) {
-                    // console.log('**** time between events ' + duration + ' *** you have time after this event: ' + singleDayEvents[i].summary + ': ' + singleDayEvents[i].endTime + ' and before this event: ' + singleDayEvents[i + 1].summary + ': ' + singleDayEvents[i + 1].startTime + ' to workout *** \n');
-
+                if (duration > 40) {                    
                     if (duration > 90) {
                         midDayWorkoutTime = moment(singleDayEvents[i].endTime).add(20, 'minutes');
                     }
@@ -57,24 +65,17 @@ export default class Day {
                     }
                 }
             }
-
         }
-        // console.log(moment(startOfEachDay).toString() + ': morningWorkoutTime suggestion: ' + moment(morningWorkoutTime).toString());
-        // console.log('midDayWorkoutTime suggestion FOR KEY ' + key + ': ' + midDayWorkoutTime);
         this.results[key] = midDayWorkoutTime;
 
         if (timeBeforeFirstEvent > 40 || timeAfterLastEvent > 40) {
-            // console.log('time before first event: ' + timeBeforeFirstEvent + ' *** you have time to workout within this timeframe *** \n');
-            // console.log('time after last event: ' + timeAfterLastEvent + ' *** you have time to workout within this timeframe *** \n');
 
-            morningWorkoutTime = moment(startOfEachDay).add(10, 'minutes');
-
-            // if (timeBeforeFirstEvent > 120) {
-            //     morningWorkoutTime = moment(startOfEachDay).add(20, 'minutes');
-            // }
-            // else {
-            //     morningWorkoutTime = moment(startOfEachDay).add(10, 'minutes');
-            // }
+            if (timeBeforeFirstEvent > 90) {
+                morningWorkoutTime = moment(startOfEachDay).add(20, 'minutes');
+            }
+            else {
+                morningWorkoutTime = moment(startOfEachDay).add(10, 'minutes');
+            }
         }
 
     }
