@@ -8,7 +8,7 @@ export default class SuggestedTimes extends Component {
       super(props);
     }
     render() {
-        console.log(this.props.freeTime + ' ' + this.props.preferences.hours + ' ' + this.props.preferences.days);
+        // console.log(this.props.freeTime + ' ' + this.props.preferences.hours + ' ' + this.props.preferences.days);
 
         return (
          <div>

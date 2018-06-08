@@ -7,7 +7,7 @@ import Layout from './Layout'
 import Authorize from './Authorize';
 import CalculateTime from './CalculateTime';
 import PreferencesForm from './PreferencesForm';
-import SuggetedTimes from './SuggestedTimes';
+import SuggestedTimes from './SuggestedTimes';
 import {
   BrowserRouter as Router,
   Route,
@@ -23,10 +23,12 @@ export default class App extends Component {
      schedule: {}
    }
   
-  handleSubmit = (fields) => {
+  handleSubmit = (fields, history) => {
     console.log('App comp got: ', fields);
     //console.log(this.props.fields.hours);
     this.setState({ fields});
+    console.log('in handle submit')
+    history.push('/times');
   }
   
   handleClick = (history) => {
@@ -35,7 +37,7 @@ export default class App extends Component {
   }
 
   render() {
-   
+   console.log('Render App');
     return (
       <div>
         <div>
@@ -47,10 +49,22 @@ export default class App extends Component {
           <div>
           <Router>
             <Switch>
-            <Route exact path="/authorize" render={() => <Authorize setSchedule={(schedule) => this.setState({schedule})} />} />
-              <Route exact path="/" render={({ history }) => (<button onClick={() => {history.push('/authorize')}}>Setup Calendar</button> )}/>
-            <Route exact path="/preferences" render={() => <PreferencesForm onSubmit={fields => this.handleSubmit(fields)} schedule={this.state.schedule}/>}/>
-              <Route exact path="/times" render={() => <SuggetedTimes fields={this.state.fields} />} schedule={this.state.schedule}/>
+            <Route exact path="/authorize" render={({history}) => 
+              <Authorize setSchedule={ (schedule) => {
+                  this.setState({ schedule });
+                  console.log('Set Shcvedule A');
+                  history.push("/preferences");
+                  console.log('Set Schedule B');
+                }
+              }/>
+            }/>
+              <Route exact path="/" render={({ history }) => (
+                <button onClick={() => {
+                  history.push('/authorize')}}
+                >Setup Calendar</button> )}/>
+              {/* <PreferencesForm results={this.state.results} /> */}
+              <Route exact path="/preferences" render={({ history }) => <PreferencesForm onSubmit={fields => this.handleSubmit(fields, history)} schedule={this.state.schedule}/>}/>
+              <Route exact path="/times" render={() => <SuggestedTimes fields={this.state.fields} />} schedule={this.state.schedule}/>
             </Switch>
           </Router>
         </div>

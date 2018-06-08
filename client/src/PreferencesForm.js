@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 //import logo from './logo.svg';
 import './App.css';
 import SuggestedTimes from './SuggestedTimes';
+import CalculateTime from './CalculateTime';
 
 export default class PreferencesForm extends Component {
     constructor(props) {
@@ -35,9 +36,12 @@ componentDidMount() {
     //fetch('/preferences').then(res => res.json())
 }
 render() {
-    console.log('my results' + this.props.results);
+    console.log('PREFENCES');
+    // console.log('my results' + this.props.results);
+    console.log(this.props.schedule);
         return (
             <div>
+                {/* <CalculateTime logIn={true} freeTime={this.state.results} /> */}
                 <h1>Tell us about when you want to workout</h1>
                 <form>
                     <p>Please type how many hours you want to workout this week:</p>
@@ -46,8 +50,7 @@ render() {
                     <input type="text" name="numOfdays" value={this.state.days} onChange={this.handleChangeDays}/>
                     <br/>
                     {/* <Route render={({ history }) => (<button onClick={() => { { this.this.handleSubmit() } history.push('/times') }}>See suggested workout times</button>)} /> */}
-                    <button onClick={this.handleSubmit }>Submit</button>
-                    <SuggestedTimes freeTime={this.props.results} preferences={this.state} />
+                    <button onClick={this.props.onSubmit}>Submit</button>
                 </form>
             </div>
         )
