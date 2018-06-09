@@ -68,10 +68,7 @@ export default class Schedule {
             }
             // console.log(eventsPerDay);
             this.eventsPerDay = eventsPerDay;
-        }
-
-        let day = new Day()
-        day.groupEventsByDay(this.eventsPerDay);
+        } 
         return this.eventsPerDay;
     }
 
