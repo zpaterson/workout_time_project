@@ -53,21 +53,28 @@ export default class Schedule {
             let eventsPerDay = {};
             let endOfWeek = eventsArray[eventsArray.length - 1].endDate;
             let startOfWeek = eventsArray[0].startDate;
+            console.log(endOfWeek)
 
             for (let key = startOfWeek; key <= endOfWeek; key++) {
                 let sameDayEvent = [];
 
                 for (let i = 0; i < eventsArray.length - 1; i++) {
-                    if (eventsArray[i].startDate === key) {
+                    if(eventsArray[i].startDate === key) {
                         sameDayEvent.push(eventsArray[i]);
                         eventsPerDay[key] = sameDayEvent;
+                        //console.log(key)
                     }
+                    // else if(!== eventsArray[i].startDate) {
+                    //     console.log('this is the key', key)
+                    // }
+
                 }
 
                 //console.log('events per day:', eventsPerDay[key]);
             }
             // console.log(eventsPerDay);
             this.eventsPerDay = eventsPerDay;
+            let day = new Day();
         } 
         return this.eventsPerDay;
     }

@@ -31,9 +31,7 @@ export default class PreferencesForm extends Component {
         event.preventDefault();
         console.log("LINE 32 OF PREFERENCES FORM", this.state)
         console.log('line 32 printing schedule data', this.props.schedule);
-        let day = new Day(this.state.hours, this.state.days);
-        day.amountOfTimeToWorkoutPerDay(this.state.hours, this.state.days);
-        day.groupEventsByDay(this.props.schedule.eventsPerDay);
+        console.log(this.state);
         
         console.log(this.state.hours);
         console.log(this.state.days);
@@ -62,7 +60,7 @@ render() {
                     <input type="text" name="numOfdays" value={this.state.days} onChange={this.handleChangeDays}/>
                     <br/>
                     {/* <Route render={({ history }) => (<button onClick={() => { { this.this.handleSubmit() } history.push('/times') }}>See suggested workout times</button>)} /> */}
-                    <button onClick={(event)=>{this.handleSubmit(event);this.props.onSubmit()}}>Submit</button>
+                    <button onClick={(event)=>{this.handleSubmit(event);this.props.onSubmit(this.state)}}>Submit</button>
                 </form>
             </div>
         )

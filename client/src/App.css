@@ -22,6 +22,25 @@
   font-size: large;
 }
 
+.StepperNav-steps-content {
+  margin-top: 16px;
+  border: 1px dashed #e9e9e9;
+  border-radius: 6px;
+  background-color: #fafafa;
+  min-height: 200px;
+  text-align: center;
+  padding-top: 80px;
+}
+
+.StepperNav-action {
+  margin-top: 44px;
+  font-size: 6em;
+}
+
+.StepperNav-btn-style {
+  background-color: aquamarine;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
