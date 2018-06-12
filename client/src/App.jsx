@@ -11,28 +11,31 @@ import SuggestedTimes from './SuggestedTimes';
 import {
   BrowserRouter as Router,
   Route,
-  Link,
   Switch,
-  Redirect
 } from 'react-router-dom'
 import Day from './day';
 import HorizontalLinearStepper from './HorizontalLinearStepper ';
+import LandingPage from './LandingPage';
 
 
 export default class App extends Component {
    state = {
-     fields: {},
+     fields : {},
      schedule: {},
-     day: {}
+     day: {},
    }
 
   
-  handleSubmit = (fields, history) => {
+  handleSubmit = (fields) => {
     console.log('App comp got: ', fields);
     this.setState({fields});
     //console.log(this.state.fields.hours);
     //console.log('in handle submit')
-    history.push('/times');
+  }
+
+  handleStep = (activeStep) => {
+    let step = activeStep
+    console.log('active step',step)
   }
   
   
@@ -40,18 +43,43 @@ export default class App extends Component {
     //console.log('App comp got: ' , results)
     console.log(history);
   }
+
+  getStepContent = (step) => {
+    switch (step) {
+      case 0:
+        return <LandingPage/>;
+      case 1:
+        return <Authorize setSchedule={schedule => this.setState({schedule})} />;
+      case 2:
+        return <CalculateTime userSignedIn freeTime={this.state.schedule.totalFreeTimePerWeek} />;
+      case 3:
+        return <PreferencesForm onSubmit={fields => this.handleSubmit(fields)}/>;
+      case 4:
+        return <SuggestedTimes schedule={this.state.schedule} fields={this.state.fields} />;
+      default:
+        return 'Unknown step';
+    }
+  };
+  
   
   render() {
    console.log('Render App');
-    return (
+
+  //  if(activeStep === 1) {
+  //    return (
+  //      <Authorize />
+  //    )
+  //  }
+   return (
       <div>
         <div>
-          <HorizontalLinearStepper />
-          <p>WorkoutTime helps you plan your next workout effortlessly. It imports your Google calendar data to calculate your free time, <br/>and suggests workout times based on your preferences, then you just click to add the suggested, workouts that work for you.</p>
+          <HorizontalLinearStepper grabActiveStep={this.handleStep}>
+            {step => this.getStepContent(step)}
+          </HorizontalLinearStepper>
           <br/>
         </div>
           <div>
-          <Router>
+          {/* <Router>
             <Switch>
             <Route exact path="/authorize" render={({history}) => 
               <Authorize setSchedule={ (schedule) => {
@@ -67,10 +95,10 @@ export default class App extends Component {
                   history.push('/authorize')}}
                 >Setup Calendar</button> )}/>
               {/* <PreferencesForm results={this.state.results} /> */}
-              <Route exact path="/preferences" render={({ history }) => <PreferencesForm onSubmit={fields => this.handleSubmit(fields, history)} schedule={this.state.schedule}/>}/>
-              <Route exact path="/times" render={() => <SuggestedTimes fields={this.state.fields} schedule={this.state.schedule}/>}/>
-            </Switch>
-          </Router>
+              {/* <Route exact path="/preferences" render={({ history }) => <PreferencesForm onSubmit={fields => this.handleSubmit(fields, history)} schedule={this.state.schedule}/>}/>
+              <Route exact path="/times" render={() => <SuggestedTimes fields={this.state.fields} schedule={this.state.schedule}/>}/> */}
+            {/* </Switch>
+          </Router>  */}
         </div>
       </div>
     )

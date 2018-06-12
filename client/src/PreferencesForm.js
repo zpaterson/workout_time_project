@@ -51,7 +51,7 @@ render() {
     // console.log(this.props.schedule);
         return (
             <div>
-                <CalculateTime freeTime={this.props.schedule.totalFreeTimePerWeek} />
+                {/* <CalculateTime freeTime={this.props.schedule.totalFreeTimePerWeek} /> */}
                 <h1>Tell us about when you want to workout</h1>
                 <form>
                     <p>Please type how many hours you want to workout this week:</p>

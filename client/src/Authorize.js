@@ -112,29 +112,45 @@ export default class Authorize extends Component {
             let schedule = new Schedule(response.result.items);
             schedule.processEventsArray();
             this.props.setSchedule(schedule);
-    })
-}
+            
+            
+        })
+    }
+    
     componentDidMount() {
         console.log('componentDidMount called')
         this.handleClientLoad();
+        
     }
-
+    
     render() {
         let authButton = <button id="authorize-button" onClick={this.handleAuthClick.bind(this)}>Authorize Google</button>
         let signOutButton = <button id="signout-button" onClick={this.handleSignoutClick.bind(this)}>Sign Out</button>
+
+        if (!this.state.userIsSignedIn) {
+            return (
+                <div className="container">
+                    <Layout title="Let's figure out how much free time you have this week" />
+                    <p>Please sign-in with your Google calendar service </p>
+                    {this.state.userIsSignedIn ? signOutButton : authButton}
+                </div>
+            )
+        }
+        else if (this.state.userIsSignedIn) {
+            return <p>You're signed-in!</p>
+        }
        
-        return (
-         <div className="container">
-                 <Layout title="Let's figure out how much free time you have this week" />
-                <p>Please sign-in with your Google calendar service </p>
-                {this.state.userIsSignedIn ? signOutButton : authButton}
-                <br/>
-                <br/>
-                <br/>
-                {/* <Route render={({ history }) => (<button onClick={() => { { results => this.handleClick(this.state.results) } history.push('/preferences') }}>Chose your workout time preferences</button>)} /> */}
-                {/* /* <button><Link to="/preferences">Chose your workout time preferences</Link></button> */}
-         </div>
-        )
+        // return (
+        //  <div className="container">
+        //          <Layout title="Let's figure out how much free time you have this week" />
+        //         <p>Please sign-in with your Google calendar service </p>
+        //         {this.state.userIsSignedIn ? signOutButton : authButton}
+        //         <br/>
+        //         <CalculateTime userSignedIn={this.state.userIsSignedIn}/>
+        //         {/* <Route render={({ history }) => (<button onClick={() => { { results => this.handleClick(this.state.results) } history.push('/preferences') }}>Chose your workout time preferences</button>)} /> */}
+        //         {/* /* <button><Link to="/preferences">Chose your workout time preferences</Link></button> */}
+        //  </div>
+        //)
     }
 }
 
