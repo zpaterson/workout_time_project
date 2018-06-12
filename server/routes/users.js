@@ -35,11 +35,12 @@ client.connect((err) => {
 
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.json([
-    {id: 1, username:"somebody"},
-    {id: 2, username:"somebody_else"},
-  ]);
+router.get('/user', function(req, res, next) {
+  console.log(req)
+  // res.json([
+  //   {id: 1, username:"somebody"},
+  //   {id: 2, username:"somebody_else"},
+  // ]);
 });
 
 module.exports = router;

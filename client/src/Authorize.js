@@ -112,8 +112,31 @@ export default class Authorize extends Component {
             let schedule = new Schedule(response.result.items);
             schedule.processEventsArray();
             this.props.setSchedule(schedule);
-            
-            
+            console.log(schedule);
+            //this.insertCalendarWorkoutEvent();
+        })
+    }
+
+    // 'my new workout', '2018-06-12T09:00:00-07:00', '2018-06-12T17:00:00-07:00'
+    insertCalendarWorkoutEvent() {
+        console.log('called insert calendar event')
+        gapi.client.calendar.events.insert({
+            'calendarId': 'primary',
+            'summary': 'my new workout',
+            'start': {
+                'dateTime': '2018-06-12T09:00:00-07:00',
+                'timeZone': 'America/Los_Angeles'
+            },
+            'end': {
+                'dateTime': '2018-06-12T17:00:00-07:00',
+                'timeZone': 'America/Los_Angeles'
+            }
+        }).then((response) => {
+            console.log('event inserted')
+            console.log(response)
+            // let schedule = new Schedule(response.result.items);
+            // schedule.processEventsArray();
+            // this.props.setSchedule(schedule) 
         })
     }
     
@@ -137,7 +160,13 @@ export default class Authorize extends Component {
             )
         }
         else if (this.state.userIsSignedIn) {
-            return <p>You're signed-in!</p>
+            return (
+                <div>
+                    <p>You're signed-in!</p>
+                    <button onClick={
+                        this.insertCalendarWorkoutEvent}> Insert an event to your calendar </button>
+                </div>
+            )
         }
        
         // return (

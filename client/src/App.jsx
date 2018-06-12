@@ -8,6 +8,7 @@ import Authorize from './Authorize';
 import CalculateTime from './CalculateTime';
 import PreferencesForm from './PreferencesForm';
 import SuggestedTimes from './SuggestedTimes';
+import axios from 'axios';
 import {
   BrowserRouter as Router,
   Route,
@@ -27,8 +28,19 @@ export default class App extends Component {
 
   
   handleSubmit = (fields) => {
-    console.log('App comp got: ', fields);
+    console.log('App comp got: ', fields.hours, fields.days);
     this.setState({fields});
+
+    axios({
+      method: 'post',
+      url: '/user',
+      data: {
+        hours: fields.hours,
+        days: fields.days
+      }
+    });
+
+
     //console.log(this.state.fields.hours);
     //console.log('in handle submit')
   }
