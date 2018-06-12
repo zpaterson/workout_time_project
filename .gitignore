@@ -1,8 +1,8 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
-/client/node_modules
-/server/node_modules
+**/client/node_modules
+**/server/node_modules
 
 # testing
 /client/coverage
@@ -28,3 +28,7 @@ npm-debug.log*
 yarn-debug.log*
 /client/yarn-error.log*
 yarn-error.log*
+/client/yarn.lock*
+yarn.lock*
+/server/yarn.lock*
+**/config.js
