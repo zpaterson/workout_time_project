@@ -28,5 +28,6 @@ npm-debug.log*
 yarn-debug.log*
 /client/yarn-error.log*
 yarn-error.log*
-
+/client/yarn.lock*
+yarn.lock*
 **/config.js
