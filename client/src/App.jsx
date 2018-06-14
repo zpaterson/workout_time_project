@@ -2,8 +2,6 @@
 import React, { Component } from 'react';
 //import logo from './logo.svg';
 import './App.css';
-import config from './config';
-import Layout from './Layout'
 import Authorize from './Authorize';
 import CalculateTime from './CalculateTime';
 import PreferencesForm from './PreferencesForm';
@@ -19,6 +17,7 @@ import HorizontalLinearStepper from './HorizontalLinearStepper ';
 import LandingPage from './LandingPage';
 
 
+
 export default class App extends Component {
    state = {
      fields : {},
@@ -26,19 +25,22 @@ export default class App extends Component {
      day: {},
    }
 
+  handleChange = (fields) => {
+    this.setState({ fields });  
+  }
   
-  handleSubmit = (fields) => {
+  handleSubmit = () => {
+    const fields = this.state.fields;
     console.log('App comp got: ', fields.hours, fields.days);
-    this.setState({fields});
 
-    axios({
-      method: 'post',
-      url: '/user',
-      data: {
-        hours: fields.hours,
-        days: fields.days
-      }
-    });
+    // axios({
+    //   method: 'post',
+    //   url: '/user',
+    //   data: {
+    //     hours: fields.hours,
+    //     days: fields.days
+    //   }
+    // });
 
 
     //console.log(this.state.fields.hours);
@@ -55,23 +57,44 @@ export default class App extends Component {
     //console.log('App comp got: ' , results)
     console.log(history);
   }
-
+ 
   getStepContent = (step) => {
     switch (step) {
       case 0:
         return <LandingPage/>;
       case 1:
-        return <Authorize setSchedule={schedule => this.setState({schedule})} />;
+        return <Authorize setSchedule={schedule => this.setState({ schedule })}/>;
       case 2:
         return <CalculateTime userSignedIn freeTime={this.state.schedule.totalFreeTimePerWeek} />;
       case 3:
-        return <PreferencesForm onSubmit={fields => this.handleSubmit(fields)}/>;
+        return <PreferencesForm onChange={fields => this.handleChange(fields)}/>;
       case 4:
-        return <SuggestedTimes schedule={this.state.schedule} fields={this.state.fields} />;
+        return (
+            <SuggestedTimes schedule={this.state.schedule} fields={this.state.fields} insertEvent={this.insertCalendarWorkoutEvent}/>
+          )
       default:
         return 'Unknown step';
     }
   };
+ 
+  insertCalendarWorkoutEvent(start, end) {
+    console.log('called insert calendar event')
+    gapi.client.calendar.events.insert({
+      'calendarId': 'primary',
+      'summary': 'My New Workout',
+      'start': {
+        'dateTime': start,
+        'timeZone': 'America/Los_Angeles'
+      },
+      'end': {
+        'dateTime': end,
+        'timeZone': 'America/Los_Angeles'
+      }
+    }).then((response) => {
+      console.log('event inserted')
+      console.log(response)
+    })
+  }
   
   
   render() {
@@ -82,10 +105,11 @@ export default class App extends Component {
   //      <Authorize />
   //    )
   //  }
+  debugger
    return (
       <div>
         <div>
-          <HorizontalLinearStepper grabActiveStep={this.handleStep}>
+          <HorizontalLinearStepper grabActiveStep={this.handleStep} onSubmit={this.handleSubmit} >
             {step => this.getStepContent(step)}
           </HorizontalLinearStepper>
           <br/>

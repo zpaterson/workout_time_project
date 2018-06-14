@@ -4,10 +4,6 @@ import React, { Component } from 'react';
 import './App.css';
 import config from './config';
 import moment from 'moment';
-
-import Layout from "./Layout";
-import PreferencesForm from './PreferencesForm';
-import CalculateTime from './CalculateTime';
 import Schedule from './schedule';
 
 import {
@@ -76,10 +72,9 @@ export default class Authorize extends Component {
         if (isSignedIn) {
             console.log('if statement inside of update sign-in')
             this.setState({
-                userIsSignedIn: true
+                userIsSignedIn: true 
             })
             this.getDateRange();
-            //insertNewEvent();
         } else {
             this.setState({
                 userIsSignedIn: false
@@ -116,29 +111,6 @@ export default class Authorize extends Component {
             //this.insertCalendarWorkoutEvent();
         })
     }
-
-    // 'my new workout', '2018-06-12T09:00:00-07:00', '2018-06-12T17:00:00-07:00'
-    insertCalendarWorkoutEvent() {
-        console.log('called insert calendar event')
-        gapi.client.calendar.events.insert({
-            'calendarId': 'primary',
-            'summary': 'my new workout',
-            'start': {
-                'dateTime': '2018-06-12T09:00:00-07:00',
-                'timeZone': 'America/Los_Angeles'
-            },
-            'end': {
-                'dateTime': '2018-06-12T17:00:00-07:00',
-                'timeZone': 'America/Los_Angeles'
-            }
-        }).then((response) => {
-            console.log('event inserted')
-            console.log(response)
-            // let schedule = new Schedule(response.result.items);
-            // schedule.processEventsArray();
-            // this.props.setSchedule(schedule) 
-        })
-    }
     
     componentDidMount() {
         console.log('componentDidMount called')
@@ -153,7 +125,7 @@ export default class Authorize extends Component {
         if (!this.state.userIsSignedIn) {
             return (
                 <div className="container">
-                    <Layout title="Let's figure out how much free time you have this week" />
+                    <h1>Let's figure out how much free time you have this week"</h1>
                     <p>Please sign-in with your Google calendar service </p>
                     {this.state.userIsSignedIn ? signOutButton : authButton}
                 </div>
@@ -163,8 +135,6 @@ export default class Authorize extends Component {
             return (
                 <div>
                     <p>You're signed-in!</p>
-                    <button onClick={
-                        this.insertCalendarWorkoutEvent}> Insert an event to your calendar </button>
                 </div>
             )
         }

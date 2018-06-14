@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 //import logo from './logo.svg';
 import './App.css';
-import SuggestedTimes from './SuggestedTimes';
-import CalculateTime from './CalculateTime';
-import Schedule from './schedule';
-import Day from './day';
 
 export default class PreferencesForm extends Component {
     constructor(props) {
@@ -15,16 +11,28 @@ export default class PreferencesForm extends Component {
         };
     
     this.handleChangeHours = (event) => {
-        this.setState({ 
-            hours: event.target.value
+        this.setState({
+            hours: event.target.value,
+             days: this.state.days
         });
-        console.log('handle change hours', event.target.value)
+        // console.log('handle change hours', event.target.value)
+        // console.log('state in peferences', this.state)
+
+        this.props.onChange({
+            hours: event.target.value,
+            days: this.state.days
+        })
     }
     this.handleChangeDays = (event) => {
         this.setState({ 
             days: event.target.value 
         });
         console.log('handle change days',event.target.value)
+        // console.log('state in peferences',this.state)
+        this.props.onChange({
+            hours: this.state.hours, 
+            days: event.target.value
+        })
     }
 
     this.handleSubmit = (event) => {
@@ -60,7 +68,7 @@ render() {
                     <input type="text" name="numOfdays" value={this.state.days} onChange={this.handleChangeDays}/>
                     <br/>
                     {/* <Route render={({ history }) => (<button onClick={() => { { this.this.handleSubmit() } history.push('/times') }}>See suggested workout times</button>)} /> */}
-                    <button onClick={(event)=>{this.handleSubmit(event);this.props.onSubmit(this.state)}}>Submit</button>
+                    {/* <button onClick={(event)=>{this.handleSubmit(event);this.props.onChange(this.state)}}>Submit</button> */}
                 </form>
             </div>
         )

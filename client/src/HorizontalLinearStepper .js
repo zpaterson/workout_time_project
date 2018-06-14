@@ -6,11 +6,6 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Authorize from './Authorize';
-import PreferencesForm from './PreferencesForm';
-import CalculateTime from './CalculateTime';
-import SuggestedTimes from './SuggestedTimes';
-import LandingPage from './LandingPage';
 
 const styles = theme => ({
   root: {
@@ -28,10 +23,6 @@ const styles = theme => ({
 function getSteps() {
   return ['Welcome','Setup Calendar', 'Calculate Free Time', 'Select Workout Time Preferences', 'See Suggested Workout Times'];
 }
-
-// handleStep3Data = () => {
-//   console.log('handleStep3data works');
-// }
 
 
 class HorizontalLinearStepper extends React.Component {
@@ -63,6 +54,9 @@ class HorizontalLinearStepper extends React.Component {
     if (this.isStepSkipped(activeStep)) {
       skipped = new Set(skipped.values());
       skipped.delete(activeStep);
+    }
+    if (this.props.onSubmit && activeStep === 3) {
+      this.props.onSubmit();
     }
     this.setState({
       activeStep: activeStep + 1,
