@@ -5,17 +5,39 @@ import './App.css';
 import config from './config';
 import moment from 'moment';
 import Schedule from './schedule';
-
+import PropTypes from 'prop-types';
+import Typography from '@material-ui/core/Typography';
 import {
-    BrowserRouter as Router,
-    Route
-} from 'react-router-dom'
+    withStyles
+} from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+
+const styles = theme => ({
+    root: {
+        flexGrow: 1,
+    },
+    demo: {
+        height: 240,
+    },
+    paper1: {
+        padding: theme.spacing.unit * 2,
+        height: '300%',
+        //textAlign: 'center',
+        color: theme.palette.text.primary,
+    },
+    control: {
+        padding: theme.spacing.unit * 2,
+    },
+});
+
 
 var CLIENT_ID = config.CLIENT_ID;
 var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
 var SCOPES = "https://www.googleapis.com/auth/calendar";
 
-export default class Authorize extends Component {
+class Authorize extends Component {
 
     constructor(props) {
         super(props);
@@ -27,6 +49,9 @@ export default class Authorize extends Component {
             results: 0,
             start: null,
             end: null,
+            direction: 'row',
+            justify: 'center',
+            alignItems: 'center', 
         };
         this.initClient = this.initClient.bind(this);
         this.updateSigninStatus = this.updateSigninStatus.bind(this);
@@ -119,15 +144,24 @@ export default class Authorize extends Component {
     }
     
     render() {
+        const { classes } = this.props;  
         let authButton = <button id="authorize-button" onClick={this.handleAuthClick.bind(this)}>Authorize Google</button>
         let signOutButton = <button id="signout-button" onClick={this.handleSignoutClick.bind(this)}>Sign Out</button>
 
         if (!this.state.userIsSignedIn) {
             return (
-                <div className="container">
+                <div>
+                  <Grid container className={classes.root}>
+                    <Grid container  spacing={24}>
+                    <Grid item xs={12}>
+                    <Paper className={classes.paper1}>
                     <h1>Let's figure out how much free time you have this week"</h1>
                     <p>Please sign-in with your Google calendar service </p>
                     {this.state.userIsSignedIn ? signOutButton : authButton}
+                    </Paper>
+                    </Grid>
+                    </Grid>
+                    </Grid>
                 </div>
             )
         }
@@ -153,3 +187,8 @@ export default class Authorize extends Component {
     }
 }
 
+Authorize.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Authorize);
