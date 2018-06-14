@@ -113,7 +113,7 @@ export default class App extends Component {
             {step => this.getStepContent(step)}
           </HorizontalLinearStepper>
           <br/>
-        </div>
+          </div>
           <div>
           {/* <Router>
             <Switch>

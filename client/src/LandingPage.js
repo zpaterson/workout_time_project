@@ -46,20 +46,20 @@ class LandingPage extends Component{
         return(
             <div>
                 <Grid container className={classes.root}>
-                <Grid container  spacing={24}>
-                 <Grid item xs={12}>
-                    <Paper className={classes.paper1}>
-                    <Typography variant="display3">WorkoutTime</Typography> 
-                </Paper>
-                 <Paper className={classes.paper2}>
-                    <p>WorkoutTime helps you plan your next workout effortlessly. It imports your Google calendar data to calculate your free time, 
-                    <br/>and suggests workout times based on your preferences, then you just click to add the suggested workouts that work for you.</p>
-                    <div>
-                        <img src={calImage} className={classes.calImageStyle} alt="image of google calendar"/>
-                    </div>
-                </Paper>
-                </Grid>
-                </Grid>
+                    <Grid container  spacing={24}>
+                        <Grid item xs={12}>
+                            <Paper className={classes.paper1}>
+                                <Typography variant="display3">WorkoutTime</Typography> 
+                            </Paper>
+                            <Paper className={classes.paper2}>
+                                <p>WorkoutTime helps you plan your next workout effortlessly. It imports your Google calendar data to calculate your free time, 
+                                <br/>and suggests workout times based on your preferences, then you just click to add the suggested workouts that work for you.</p>
+                                <div>
+                                    <img src={calImage} className={classes.calImageStyle} alt="image of google calendar"/>
+                                </div>
+                            </Paper>
+                        </Grid>
+                    </Grid>
                 </Grid>
             </div>
         )

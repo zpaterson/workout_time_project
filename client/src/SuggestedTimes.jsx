@@ -49,6 +49,7 @@ class SuggestedTimes extends Component {
         day.amountOfTimeToWorkoutPerDay(this.props.fields.hours, this.props.fields.days);
         day.groupEventsByDay(this.props.schedule.eventsPerDay);
         console.log(day);
+
         let days = day.days.map((nameOfDay, index) => (
             <div key={index}>
                 <h3>{nameOfDay}</h3>
@@ -72,17 +73,16 @@ class SuggestedTimes extends Component {
                 <Grid container  spacing={24}>
                  <Grid item xs={12}>
                     <Paper className={classes.paper1}>
-                    <Typography variant="display2">Here's your suggested workout times</Typography>
-                    <br/>
-                     <Typography variant="subheading">{days}</Typography>
-                            </Paper>
-                        </Grid>
-                    </Grid>
+                        <Typography variant="display2">Here's your suggested workout times</Typography>
+                        <br/>
+                        <Typography variant="subheading">{days}</Typography>
+                    </Paper>
                 </Grid>
-
-            </div>
-        )
-    }
+             </Grid>
+        </Grid>
+      </div>
+     )
+   }
 }
 
 SuggestedTimes.propTypes = {

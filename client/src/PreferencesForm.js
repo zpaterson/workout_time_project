@@ -91,35 +91,35 @@ render() {
             <div>
                  <Grid container className={classes.root}>
                     <Grid container  spacing={24}>
-                    <Grid item xs={12}>
-                    <Paper className={classes.paper1}>
-                    <Typography variant="display2">Tell us about when you want to workout</Typography>
-                    <br/>
-                    <br/>
-                    <form>
-                        <Typography variant="subheading"> Please tell us how many hours you'd like to workout this week:</Typography>
-                            <input type="text" name="numOfhours" value={this.state.hours} onChange={this.handleChangeHours}/>
+                        <Grid item xs={12}>
+                            <Paper className={classes.paper1}>
+                                <Typography variant="display2">Tell us about when you want to workout</Typography>
+                                <br/>
+                                <br/>
+                                <form>
+                                <Typography variant="subheading"> Please tell us how many hours you'd like to workout this week:</Typography>
+                                    <input type="text" name="numOfhours" value={this.state.hours} onChange={this.handleChangeHours}/>
+                                    <br/>
+                                    <br/>
+                                <Typography variant="subheading">Please tells us type how many days you want to workout this week:</Typography>
+                                    <input type="text" name="numOfdays" value={this.state.days} onChange={this.handleChangeDays}/>
+                                <br/>
+                                    {/* <Route render={({ history }) => (<button onClick={() => { { this.this.handleSubmit() } history.push('/times') }}>See suggested workout times</button>)} /> */}
+                                {/* <button onClick={(event)=>{this.handleSubmit(event);this.props.onChange(this.state)}}>Submit</button> */}
+                            </form>
                             <br/>
                             <br/>
-                        <Typography variant="subheading">Please tells us type how many days you want to workout this week:</Typography>
-                            <input type="text" name="numOfdays" value={this.state.days} onChange={this.handleChangeDays}/>
-                        <br/>
-                             {/* <Route render={({ history }) => (<button onClick={() => { { this.this.handleSubmit() } history.push('/times') }}>See suggested workout times</button>)} /> */}
-                        {/* <button onClick={(event)=>{this.handleSubmit(event);this.props.onChange(this.state)}}>Submit</button> */}
-                    </form>
-                    <br/>
-                    <br/>
-                    <br/> 
-                    <br/> 
-                    <br/> 
-                    <br/> 
-                    <br/> 
-                    <br/> 
-                </Paper>
-                </Grid>
-                </Grid>
-                </Grid>
-            </div>
+                            <br/> 
+                            <br/> 
+                            <br/> 
+                            <br/> 
+                            <br/> 
+                            <br/> 
+                    </Paper>
+                 </Grid>
+             </Grid>
+            </Grid>
+        </div>
         )
     }
 }
