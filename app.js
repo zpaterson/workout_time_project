@@ -49,13 +49,13 @@ app.use(function(err, req, res, next) {
 
 //all the auth code 
 app.use(bodyParser.json());
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true
-}));
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(session({
+//   secret: process.env.SESSION_SECRET,
+//   resave: false,
+//   saveUninitialized: true
+// }));
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 // app.get('/',( req, res) => res.status(200).send ({
 //   message: 'Welcome to Express Index',
@@ -73,66 +73,66 @@ app.use(passport.session());
 /**
  * Local Auth
  */
-let myUser = {};
-passport.use( new GoogleStrategy({ 
-  clientID: process.env.CLIENT_ID,
-  clientSecret: process.env.CLIENT_SECRET,
-  callbackURL: '/api/auth/callback'
-},
-  function (accessToken, refreshToken, profile, cb) {
+// let myUser = {};
+// passport.use( new GoogleStrategy({ 
+//   clientID: process.env.CLIENT_ID,
+//   clientSecret: process.env.CLIENT_SECRET,
+//   callbackURL: '/api/auth/callback'
+// },
+  //function (accessToken, refreshToken, profile, cb) {
     // db.users.findOne({ username: username }, function (err, user) {
     //   if (err) { return next(err); }
     //   if (!user) { return next(null, false); }
     //   if (user.password != password) { return next(null, false); }
     //   return next(null, user);
-     cb(null, myUser)
+  //    cb(null, myUser)
 
-    })
-  )
-
-
+  //   })
+  // )
 
 
-passport.serializeUser(function (user, done) {
-  myUser = user;
-  return done(null, user);
-})
 
-passport.deserializeUser(function (user, done) {
-  return done(null, myUser);
-})
 
-app.get('/api/auth/google', passport.authenticate('google', { scope: ['profile'] }), (req, res) => {
-  // Going out to Google
-  res.redirect('/')
-})
+// passport.serializeUser(function (user, done) {
+//   myUser = user;
+//   return done(null, user);
+// })
 
-app.get('/api/auth/callback', passport.authenticate('google'), (req, res) => {
-  // Coming back from Google
-  res.redirect('/fdhjshfjdksa')
-})
+// passport.deserializeUser(function (user, done) {
+//   return done(null, myUser);
+// })
 
-app.get('/api/me', function (req, res) {
-  if (req.user) {
-    console.log(req.user);
-    res.status(200).send(req.user);
-  } else {
-    console.log('NO user!')
-    res.status(200).send('ok');
-  }
-})
+// app.get('/api/auth/google', passport.authenticate('google', { scope: ['profile'] }), (req, res) => {
+//   // Going out to Google
+//   res.redirect('/')
+// })
 
-app.get('/api/mydeepestdarkestsecrets', (req, res) => {
-  if (req.isAuthenticated) {
-    // logged in
-  } else {
-    // forbidden!!!
-  }
-})
+// app.get('/api/auth/callback', passport.authenticate('google'), (req, res) => {
+//   // Coming back from Google
+//   res.redirect('/fdhjshfjdksa')
+// })
 
-app.get('/api/auth/logout', function (req, res) {
-  req.logout();
-  res.redirect('/');
-})
+// app.get('/api/me', function (req, res) {
+//   if (req.user) {
+//     console.log(req.user);
+//     res.status(200).send(req.user);
+//   } else {
+//     console.log('NO user!')
+//     res.status(200).send('ok');
+//   }
+// })
+
+// app.get('/api/mydeepestdarkestsecrets', (req, res) => {
+//   if (req.isAuthenticated) {
+//     // logged in
+//   } else {
+//     // forbidden!!!
+//   }
+// })
+
+// app.get('/api/auth/logout', function (req, res) {
+//   req.logout();
+//   res.redirect('/');
+// })
 
 module.exports = app;
