@@ -51,6 +51,8 @@ export default class Schedule {
     calculateEventsPerDay(eventsArray) {
         if (this.eventsPerDay === undefined) {
             let eventsPerDay = {};
+            // let startOfWeek = 16;
+            // let endOfWeek = 23;
             let endOfWeek = eventsArray[eventsArray.length - 1].endDate;
             let startOfWeek = eventsArray[0].startDate;
             console.log(endOfWeek)
@@ -64,7 +66,7 @@ export default class Schedule {
                         eventsPerDay[key] = sameDayEvent;
                         //console.log(key)
                     }
-                    // else if(!== eventsArray[i].startDate) {
+                    // else if(eventsArray[i].startDate !== key) {
                     //     console.log('this is the key', key)
                     // }
 

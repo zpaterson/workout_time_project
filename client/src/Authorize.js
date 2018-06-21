@@ -4,22 +4,40 @@ import React, { Component } from 'react';
 import './App.css';
 import config from './config';
 import moment from 'moment';
-
-import Layout from "./Layout";
-import PreferencesForm from './PreferencesForm';
-import CalculateTime from './CalculateTime';
 import Schedule from './schedule';
-
+import PropTypes from 'prop-types';
+import Typography from '@material-ui/core/Typography';
 import {
-    BrowserRouter as Router,
-    Route
-} from 'react-router-dom'
+    withStyles
+} from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+
+const styles = theme => ({
+    root: {
+        flexGrow: 1,
+    },
+    demo: {
+        height: 240,
+    },
+    paper1: {
+        padding: theme.spacing.unit * 2,
+        height: '300%',
+        //textAlign: 'center',
+        color: theme.palette.text.primary,
+    },
+    control: {
+        padding: theme.spacing.unit * 2,
+    },
+});
+
 
 var CLIENT_ID = config.CLIENT_ID;
 var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
 var SCOPES = "https://www.googleapis.com/auth/calendar";
 
-export default class Authorize extends Component {
+class Authorize extends Component {
 
     constructor(props) {
         super(props);
@@ -31,6 +49,9 @@ export default class Authorize extends Component {
             results: 0,
             start: null,
             end: null,
+            direction: 'row',
+            justify: 'center',
+            alignItems: 'center', 
         };
         this.initClient = this.initClient.bind(this);
         this.updateSigninStatus = this.updateSigninStatus.bind(this);
@@ -76,10 +97,9 @@ export default class Authorize extends Component {
         if (isSignedIn) {
             console.log('if statement inside of update sign-in')
             this.setState({
-                userIsSignedIn: true
+                userIsSignedIn: true 
             })
             this.getDateRange();
-            //insertNewEvent();
         } else {
             this.setState({
                 userIsSignedIn: false
@@ -116,29 +136,6 @@ export default class Authorize extends Component {
             //this.insertCalendarWorkoutEvent();
         })
     }
-
-    // 'my new workout', '2018-06-12T09:00:00-07:00', '2018-06-12T17:00:00-07:00'
-    insertCalendarWorkoutEvent() {
-        console.log('called insert calendar event')
-        gapi.client.calendar.events.insert({
-            'calendarId': 'primary',
-            'summary': 'my new workout',
-            'start': {
-                'dateTime': '2018-06-12T09:00:00-07:00',
-                'timeZone': 'America/Los_Angeles'
-            },
-            'end': {
-                'dateTime': '2018-06-12T17:00:00-07:00',
-                'timeZone': 'America/Los_Angeles'
-            }
-        }).then((response) => {
-            console.log('event inserted')
-            console.log(response)
-            // let schedule = new Schedule(response.result.items);
-            // schedule.processEventsArray();
-            // this.props.setSchedule(schedule) 
-        })
-    }
     
     componentDidMount() {
         console.log('componentDidMount called')
@@ -147,15 +144,24 @@ export default class Authorize extends Component {
     }
     
     render() {
+        const { classes } = this.props;  
         let authButton = <button id="authorize-button" onClick={this.handleAuthClick.bind(this)}>Authorize Google</button>
         let signOutButton = <button id="signout-button" onClick={this.handleSignoutClick.bind(this)}>Sign Out</button>
 
         if (!this.state.userIsSignedIn) {
             return (
-                <div className="container">
-                    <Layout title="Let's figure out how much free time you have this week" />
+                <div>
+                  <Grid container className={classes.root}>
+                    <Grid container  spacing={24}>
+                    <Grid item xs={12}>
+                    <Paper className={classes.paper1}>
+                    <h1>Let's figure out how much free time you have this week"</h1>
                     <p>Please sign-in with your Google calendar service </p>
                     {this.state.userIsSignedIn ? signOutButton : authButton}
+                    </Paper>
+                    </Grid>
+                    </Grid>
+                    </Grid>
                 </div>
             )
         }
@@ -163,8 +169,6 @@ export default class Authorize extends Component {
             return (
                 <div>
                     <p>You're signed-in!</p>
-                    <button onClick={
-                        this.insertCalendarWorkoutEvent}> Insert an event to your calendar </button>
                 </div>
             )
         }
@@ -183,3 +187,8 @@ export default class Authorize extends Component {
     }
 }
 
+Authorize.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Authorize);
