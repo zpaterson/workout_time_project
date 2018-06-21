@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var config = require('./config')
+require('dotenv').process.env();
 
 //auth code dependencies
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -50,7 +50,7 @@ app.use(function(err, req, res, next) {
 //all the auth code 
 app.use(bodyParser.json());
 app.use(session({
-  secret: config.SESSION_SECRET,
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }));
@@ -75,8 +75,8 @@ app.use(passport.session());
  */
 let myUser = {};
 passport.use( new GoogleStrategy({ 
-  clientID: config.CLIENT_ID,
-  clientSecret: config.CLIENT_SECRET,
+  clientID: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENT_SECRET,
   callbackURL: '/api/auth/callback'
 },
   function (accessToken, refreshToken, profile, cb) {
