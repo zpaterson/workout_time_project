@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 //import logo from './logo.svg';
 import './App.css';
-import config from './config';
 import moment from 'moment';
 import Schedule from './schedule';
 import PropTypes from 'prop-types';
@@ -33,7 +32,7 @@ const styles = theme => ({
 });
 
 
-var CLIENT_ID = config.CLIENT_ID;
+var CLIENT_ID = process.env.CLIENT_ID;
 var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
 var SCOPES = "https://www.googleapis.com/auth/calendar";
 
