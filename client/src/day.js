@@ -20,6 +20,15 @@ export default class Day {
             }
         }
     }
+    
+    // findFreeDays(eventsPerDay) {
+    //     let busy = Object.keys(eventsPerDay);
+    //     let free = [];
+    //     for(let i in busy) {
+    //         if( busy.)
+    //     }
+    // }
+
     //4am
     startOfDay(day) {
         return moment(day).minutes(0).hours(4);
@@ -120,7 +129,7 @@ export default class Day {
                 //console.log(i)
                 
                 if (moment(singleDayEvents[i].endTime).format("H:mm") > midDayStart && moment(singleDayEvents[i].endTime).format("H:mm") < midDayEnd) {
-                    console.log('in the findFirstEventInMidday ',singleDayEvents[i]);
+                    //console.log('in the findFirstEventInMidday ',singleDayEvents[i]);
                     return i;
                 }
             }  
@@ -128,7 +137,7 @@ export default class Day {
         }
 
         const firstEventInMidday = findFirstEventInMidday();
-        console.log('firstEventInMidday:', firstEventInMidday);
+        //console.log('firstEventInMidday:', firstEventInMidday);
             // add logic to deal with the index being -1
 
             if(firstEventInMidday !== -1) {
@@ -168,63 +177,69 @@ export default class Day {
 
         let eveningWorkoutTime;
         let eveningWorkoutEndTime;
-        const eveningStart = "17:00:00";
-        const eveningEndTime = "21:00:00"
-        let tenMinutesExtra = 10;
+        const eveningStart = 17;
+        const eveningEndTime = 21;
+        const tenMinutesExtra = 10;
         let lastElement = singleDayEvents.length - 1;
 
+        //checks to see if an event is in the evening or spans past the evening timeframe (5p-9p)
         function findFirstEventInEvening() {
             for (let i = 0; i <= lastElement; i++) {
-                //console.log(i)
-                console.log('singleDayEvents', singleDayEvents);
-                console.log('in the findFirstEventInEvening', singleDayEvents[i]);
-                console.log('sklksfljslk', moment(singleDayEvents[i].endTime).format("H:mm"))
-                console.log('evening start', eveningStart)
-                console.log('evening end', eveningEndTime)
-
-                if(moment(singleDayEvents[i].endTime).format("H:mm") > eveningStart && moment(singleDayEvents[i].endTime).format("H:mm") < eveningEndTime) {
+                if (moment(singleDayEvents[i].endTime).hours() > eveningStart && moment(singleDayEvents[i].endTime).hours() < eveningEndTime) {
+                    // console.log('in evening span summary:', singleDayEvents[i].summary, 'end:', singleDayEvents[i].endTime);
                     return i;
                 }
-                else if (moment(singleDayEvents[i].startTime).format("H:mm") <= eveningStart && moment(singleDayEvents[i].endTime).format("H:mm") >= eveningEndTime) {
+                else if (moment(singleDayEvents[i].startTime).hours() <= eveningStart && moment(singleDayEvents[i].endTime).hours() >= eveningEndTime) {
+                    // console.log('in evening span summary:', singleDayEvents[i].summary, 'end:', singleDayEvents[i].endTime);
                     return -2;
+                }
+                else if(singleDayEvents[i] === null) {
+                    //console.log('there are no events for this day')
                 }
             }
             return -1;
         }
 
         const firstEventInEvening = findFirstEventInEvening();
-        console.log('firstEventInEvening', firstEventInEvening);
+        //console.log('firstEventInEvening', firstEventInEvening);
+
         // add logic to deal with the index being -1
 
         if (firstEventInEvening >= 0) {
-
+            // console.log('in evening span title', singleDayEvents[firstEventInEvening].summary, 'start', singleDayEvents[firstEventInEvening].startTime, 'end:', singleDayEvents[firstEventInEvening].endTime);
                 const findEndOfPotentialWorkoutPeriod = () => {
                     if(singleDayEvents[(firstEventInEvening + 1)] != null) {
+
+                        //console.log('not null event summary', singleDayEvents[firstEventInEvening + 1].summary, 'start of next event when next event is not null', singleDayEvents[firstEventInEvening + 1].startTime);
+
                         singleDayEvents[firstEventInEvening + 1].startTime
                     } else {
+
+                        //   console.log('not null event summary', singleDayEvents[firstEventInEvening + 1].summary, 'start of next event when next event is not null', singleDayEvents[firstEventInEvening + 1].startTime);
+                        
                         moment(singleDayEvents[firstEventInEvening].startTime).minutes(0).hours(21);
                     }
                 }
 
                 let endOfPotentialWorkoutPeriod = findEndOfPotentialWorkoutPeriod()
                 let timeAfterFirstEveningEvent = moment.duration(moment(singleDayEvents[firstEventInEvening].endTime).diff(endOfPotentialWorkoutPeriod)).asMinutes();
-                console.log('timeAfterFirstEveningEvent', timeAfterFirstEveningEvent)
-                console.log('timeAfterFirstEveningEvent', typeof(timeAfterFirstEveningEvent));
+                // console.log('timeAfterFirstEveningEvent', timeAfterFirstEveningEvent)
+                // console.log('timeAfterFirstEveningEvent', typeof(timeAfterFirstEveningEvent));
 
 
             if (timeAfterFirstEveningEvent > (workoutTimeAmount + tenMinutesExtra)) {
 
-                console.log("eveningWorkout", singleDayEvents[firstEventInEvening].endTime);
+                //console.log("eveningWorkout", singleDayEvents[firstEventInEvening].endTime);
                 if (timeAfterFirstEveningEvent > 90) {
                     eveningWorkoutTime = moment(singleDayEvents[firstEventInEvening].endTime).add(20, 'minutes');
                     eveningWorkoutEndTime = moment(eveningWorkoutTime).add((workoutTimeAmount + tenMinutesExtra), 'minutes');
-                    console.log("eveningWorkout")
+                    //console.log("eveningWorkout")
                     //this.results.eveningWorkout = moment(eveningWorkoutTime).toString();
                 }
                 else {
                     eveningWorkoutTime = moment(singleDayEvents[firstEventInEvening].endTime).add(10, 'minutes');
                     eveningWorkoutEndTime = moment(eveningWorkoutTime).add((workoutTimeAmount + tenMinutesExtra), 'minutes');
-                    console.log('something different')
+                    //console.log('something different')
                     //this.results.eveningWorkout = moment(eveningWorkoutTime).toString();
                 }
                 //console.log('evening workout:', moment(eveningWorkoutTime).toString());
@@ -236,12 +251,12 @@ export default class Day {
             }
         }
         else if(firstEventInEvening === -2 ) {
-            this.eveningWorkout.push('no evening workout available');
-            this.eveningWorkoutEndTime.push('no evening workout available');
+            this.eveningWorkout.push(null);
+            this.eveningWorkoutEndTime.push(null);
         }
         else {
             this.eveningWorkout.push(moment(singleDayEvents[0].startTime).minutes(30).hours(17));
-            console.log('workouttimeamount', workoutTimeAmount);
+            //console.log('workouttimeamount', workoutTimeAmount);
             this.eveningWorkoutEndTime.push(moment(singleDayEvents[0].startTime).minutes(30).hours(17).add(workoutTimeAmount + tenMinutesExtra, 'minutes'));
         }
         

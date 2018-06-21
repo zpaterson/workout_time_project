@@ -105,7 +105,6 @@ export default class App extends Component {
   //      <Authorize />
   //    )
   //  }
-  debugger
    return (
       <div>
         <div>

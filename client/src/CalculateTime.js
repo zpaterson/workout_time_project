@@ -42,7 +42,7 @@ class CalculateTime extends Component {
                     <Grid container  spacing={24}>
                         <Grid item xs={12}>
                             <Paper className={classes.paper1}>
-                                <Typography variant="display1">Great, based your schedule you have: </Typography> 
+                                <Typography variant="display1">Great, based on your schedule you have: </Typography> 
                                 <h2>{this.props.freeTime} hours of free time this week!</h2>
                                 <br/>
                                 <br/>

@@ -56,6 +56,7 @@ class SuggestedTimes extends Component {
                 <ul>
                     {day.morningWorkout[index] ? <li>Morning: {moment(day.morningWorkout[index]).format("h:mm a")} –– {moment(day.morningWorkoutEndTime[index]).format("h:mm a")} <Button size="small" variant="outlined"
                         color="primary" className={classes.button} onClick={() => this.props.insertEvent(day.morningWorkout[index], day.morningWorkoutEndTime[index])}>Add to Calendar</Button></li> : null}
+                    
 
                     {day.midDayWorkout[index] ? <li>Midday: {moment(day.midDayWorkout[index]).format("h:mm a")} –– {moment(day.midDayWorkoutEndTime[index]).format("h:mm a")} <Button size="small" variant="outlined"
                         color="primary" className={classes.button} onClick={() => this.props.insertEvent(day.midDayWorkout[index], day.midDayWorkoutEndTime[index])}>Add to Calendar</Button></li> : null}
