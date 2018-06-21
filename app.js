@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-require('dotenv').config();
+require('dotenv').config({path: __dirname + '/.env'});
 
 //auth code dependencies
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;

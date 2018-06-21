@@ -5,11 +5,9 @@ import './App.css';
 import moment from 'moment';
 import Schedule from './schedule';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
 import {
     withStyles
 } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
@@ -32,7 +30,7 @@ const styles = theme => ({
 });
 
 
-var CLIENT_ID = process.env.CLIENT_ID;
+var CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
 var SCOPES = "https://www.googleapis.com/auth/calendar";
 
@@ -40,6 +38,7 @@ class Authorize extends Component {
 
     constructor(props) {
         super(props);
+        console.log('this is my client id', CLIENT_ID);
         this.state = {
             userIsSignedIn: false,
             // showAuthButton: false,
