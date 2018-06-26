@@ -19,17 +19,40 @@ export default class Day {
                 this.suggestedWorkoutTimes(eventsPerDay[key]);
             }
         }
+        
     }
-    
-    // findFreeDays(eventsPerDay) {
-    //     let busy = Object.keys(eventsPerDay);
-    //     let free = [];
-    //     for(let i in busy) {
-    //         if( busy.)
+
+    // storeDates() {
+        
+    //     let currentDate = moment().date();
+    //     let weekFromCurrentDate = moment().add(7, 'days').date();
+    //     let datesArr = [];
+    //     for(let i = currentDate; i <= weekFromCurrentDate; i++) {
+    //         datesArr.push('' + i);
     //     }
+    //     //console.log('this is an array of the days in this week', datesArr);
+    //     return datesArr;
     // }
 
-    //this is a change
+     
+    // findFreeDays(eventsPerDay) {
+    //     let daysInWeek = this.storeDates();
+    //     let busy = Object.keys(eventsPerDay);
+    //     //busy = parseInt(busy);
+
+    //     let free = [];
+    //     for(let i = 0; i < daysInWeek.length; i++) {
+    //         //console.log('this is my busy array', busy[i]);
+    //         //let busyIndex = parseInt(busy[i]);
+    //         if(!busy.includes(daysInWeek[i])) {
+    //            //console.log('days in week', daysInWeek[i], 'and busy arr:', busyIndex);
+    //           free.push(daysInWeek[i]);
+    //         }
+    //     }
+    //     console.log('free days:', free);
+    //     return free;
+    // }
+   
 
     //4am
     startOfDay(day) {
@@ -75,10 +98,17 @@ export default class Day {
     
     suggestedWorkoutTimes(singleDayEvents) {
        let workoutTimeAmount = this.amountOfTimeToWorkoutPerDay();
+       //let freeDays = this.findFreeDays(eventsPerDay);
+        //this.defaultWorkoutTimes(freeDays, workoutTimeAmount);
         this.suggestedMorningWorkoutTime(singleDayEvents, workoutTimeAmount);
         this.suggestedMidDayWorkoutTime(singleDayEvents, workoutTimeAmount);
         this.suggestedEveningWorkoutTime(singleDayEvents, workoutTimeAmount);
     }
+
+    //defaultWorkoutTimes(freeDays, workoutTimeAmount) {
+        // this.morningWorkoutTime = moment().minutes(0).hours(9);
+        // this.morningWorkoutEndTime = moment(morningWorkoutTime).add((workoutTimeAmount + tenMinutesExtra), 'minutes');
+    //}
     
     suggestedMorningWorkoutTime(singleDayEvents, workoutTimeAmount) {
         

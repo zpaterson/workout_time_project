@@ -1,11 +1,13 @@
 import moment from 'moment';
 import Day from './day';
+//import { SIGPROF } from 'constants';
 
 
 export default class Schedule {
     constructor(eventsArray) {
         this.eventsArray = eventsArray;
         this.totalFreeTimePerWeek = 0;
+        this.weeklySchedule = this.createWeeklyEventsTemplate();
     }
 
     processEventsArray() {
@@ -48,37 +50,112 @@ export default class Schedule {
         this.totalFreeTimePerWeek = Math.round(((totalMinsInAWeek - totalTime) / 60));
     }
 
-    calculateEventsPerDay(eventsArray) {
-        if (this.eventsPerDay === undefined) {
-            let eventsPerDay = {};
-            // let startOfWeek = 16;
-            // let endOfWeek = 23;
-            let endOfWeek = eventsArray[eventsArray.length - 1].endDate;
-            let startOfWeek = eventsArray[0].startDate;
-            console.log(endOfWeek)
+    groupEvents(eventsArray) {
+        for(let event of eventsArray) {
+            let morningStart = moment(event.startTime).minutes(0).hours(4);
+            let afternoonStart = moment(event.startTime).minutes(0).hours(12);
+            let eveningStart = moment(event.startTime).minutes(0).hours(17);
+            let endOfDay = moment(event.startTime).minutes(0).hours(21);
 
-            for (let key = startOfWeek; key <= endOfWeek; key++) {
-                let sameDayEvent = [];
-
-                for (let i = 0; i < eventsArray.length - 1; i++) {
-                    if(eventsArray[i].startDate === key) {
-                        sameDayEvent.push(eventsArray[i]);
-                        eventsPerDay[key] = sameDayEvent;
-                        //console.log(key)
-                    }
-                    // else if(eventsArray[i].startDate !== key) {
-                    //     console.log('this is the key', key)
-                    // }
-
-                }
-
-                //console.log('events per day:', eventsPerDay[key]);
+            if(event.startTime < afternoonStart) {
+                this.sortOrSplit(event, morningStart, afternoonStart, 'morning', 'afternoon');
             }
-            // console.log(eventsPerDay);
-            this.eventsPerDay = eventsPerDay;
-            let day = new Day();
-        } 
-        return this.eventsPerDay;
+            else if(event.startTime < eveningStart) {
+                this.sortOrSplit(event, afternoonStart, eveningStart,'afternoon', 'evening');
+            }
+            else {
+                this.sortOrSplit(event, eveningStart, endOfDay, 'evening', 'morning');
+            }
+        }
     }
 
+    createWeeklyEventsTemplate() {
+        let weeklySchedule = {};
+        //let currentDate = moment().format();
+        let daysOfTheWeek = [];
+
+        for(let i = 0; i <= 6; i++) {
+            console.log('got here in the for loop of create weekly')
+            let date = moment().add(i, 'days');
+            daysOfTheWeek.push(date);
+        }
+        console.log('daysOfTheWeek', daysOfTheWeek)
+
+        let timesOfDay = {
+            morning: [],
+            afternoon: [],
+            evening: []
+        }
+
+        daysOfTheWeek.forEach(eventDay => {
+            console.log('this is the foreach of days of the week')
+            console.log('eventDay', eventDay)
+            weeklySchedule[moment(eventDay).format('DDMMYYYY')] = timesOfDay;
+            console.log(moment(eventDay).format('DDMMYYYY'));
+        });
+
+        return weeklySchedule;
+    }
+
+    sortOrSplit(event, firsTimeOfDayStart, secondTimeOfDayStart, firstTimeOfDay, secondTimeOfDay) {
+        let date = moment(event.startTime).format('DDMMYYYY');
+        if (event.startTime >= firsTimeOfDayStart && event.endTime <= secondTimeOfDayStart) {
+            let simpleEvent = {
+                summary: event.summary,
+                startTime: event.startTime,
+                endTime: event.endTime
+            };
+            this.weeklySchedule[date][firstTimeOfDay].push(event);
+        }
+        else {
+          let firstHalfOfEvent = {
+              summary: event.summary,
+              startTime: event.startTime,
+              endTime: event.endTime
+          };
+          let secondHalfOfEvent = {
+              summary: event.summary,
+              startTime: event.startTime,
+              endTime: event.endTime
+          };
+
+        }
+    }
+
+     calculateEventsPerDay(eventsArray) {
+         if (this.eventsPerDay === undefined) {
+             let eventsPerDay = {};
+             // let startOfWeek = 16;
+             // let endOfWeek = 23;
+             let endOfWeek = eventsArray[eventsArray.length - 1].endDate;
+             let startOfWeek = eventsArray[0].startDate;
+             console.log('endOfWeek', endOfWeek, 'startOfWeek', startOfWeek);
+             console.log('eventsArray in events per day function', eventsArray);
+             
+               let datesInWeek = [];
+               let sameDayEvent = [];
+             for (let i = 0 ; i <= 6; i++) {
+                 //console.log('eventsArray in events per day for loop');
+                 //console.log('this is my key', key);
+                 datesInWeek.push(moment().add(i , 'days').date());
+             }
+            for (let i = 0; i < eventsArray.length - 1; i++) {
+                     //console.log('event start date', eventsArray[i].startDate,' ', datesInWeek[i]);
+             if (datesInWeek.includes(eventsArray[i].startDate)) {
+                         sameDayEvent.push(eventsArray[i]);
+                         eventsPerDay[datesInWeek[i]] = sameDayEvent;
+                     }
+                     //console.log('datesInWeek[i]',datesInWeek[i])
+            }
+                //console.log('events per day:', eventsPerDay[key]);
+            
+            // console.log(eventsPerDay);
+            console.log('dates in the week', datesInWeek);
+             this.eventsPerDay = eventsPerDay;
+             let day = new Day();
+         }
+         return this.eventsPerDay;
+     }
+
 }
+
