@@ -11,7 +11,6 @@ export default class Schedule {
     }
 
     processEventsArray() {
-        console.log('process events');
         let eventsArray = [];
         let totalTime = 0;
         let summary, startTime, endTime, startDate, endDate;
@@ -29,11 +28,7 @@ export default class Schedule {
                 timeframe: duration
             }
             eventsArray.push(eventObj);
-            //console.log('duration: ', duration)
         });
-        
-        //console.log("eventsArray:", eventsArray);
-        
         let totalMinsInAWeek = this.calculateTotalMinsInAWeek()
         this.calculateTotalFreeTimePerWeek(totalMinsInAWeek, totalTime);
         this.calculateEventsPerDay(eventsArray)
@@ -75,12 +70,9 @@ export default class Schedule {
         let daysOfTheWeek = [];
 
         for(let i = 0; i <= 6; i++) {
-            console.log('got here in the for loop of create weekly')
             let date = moment().add(i, 'days');
             daysOfTheWeek.push(date);
         }
-        console.log('daysOfTheWeek', daysOfTheWeek)
-
         let timesOfDay = {
             morning: [],
             afternoon: [],
@@ -88,10 +80,7 @@ export default class Schedule {
         }
 
         daysOfTheWeek.forEach(eventDay => {
-            console.log('this is the foreach of days of the week')
-            console.log('eventDay', eventDay)
             weeklySchedule[moment(eventDay).format('DDMMYYYY')] = timesOfDay;
-            console.log(moment(eventDay).format('DDMMYYYY'));
         });
 
         return weeklySchedule;
@@ -123,34 +112,25 @@ export default class Schedule {
     }
 
      calculateEventsPerDay(eventsArray) {
+         
          if (this.eventsPerDay === undefined) {
              let eventsPerDay = {};
-             // let startOfWeek = 16;
-             // let endOfWeek = 23;
-             let endOfWeek = eventsArray[eventsArray.length - 1].endDate;
-             let startOfWeek = eventsArray[0].startDate;
-             console.log('endOfWeek', endOfWeek, 'startOfWeek', startOfWeek);
-             console.log('eventsArray in events per day function', eventsArray);
+             let datesInWeek = [];
              
-               let datesInWeek = [];
-               let sameDayEvent = [];
-             for (let i = 0 ; i <= 6; i++) {
-                 //console.log('eventsArray in events per day for loop');
-                 //console.log('this is my key', key);
-                 datesInWeek.push(moment().add(i , 'days').date());
-             }
-            for (let i = 0; i < eventsArray.length - 1; i++) {
-                     //console.log('event start date', eventsArray[i].startDate,' ', datesInWeek[i]);
-             if (datesInWeek.includes(eventsArray[i].startDate)) {
-                         sameDayEvent.push(eventsArray[i]);
-                         eventsPerDay[datesInWeek[i]] = sameDayEvent;
-                     }
-                     //console.log('datesInWeek[i]',datesInWeek[i])
+            for (let i = 0; i <= 6; i++) {
+                datesInWeek.push(moment().add(i , 'days').format());
+            }  
+                          
+            for (let i = 0 ; i <= 6; i++) {
+                let sameDayEvent = [];
+                for (let j = 0; j < eventsArray.length - 1; j++) {
+                    let formattedDate = moment(datesInWeek[i]).date();
+                    if (formattedDate === eventsArray[j].startDate) {
+                        sameDayEvent.push(eventsArray[j]);
+                        eventsPerDay[datesInWeek[i]] = sameDayEvent;
+                    }
+                }
             }
-                //console.log('events per day:', eventsPerDay[key]);
-            
-            // console.log(eventsPerDay);
-            console.log('dates in the week', datesInWeek);
              this.eventsPerDay = eventsPerDay;
              let day = new Day();
          }
