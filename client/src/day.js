@@ -141,6 +141,7 @@ export default class Day {
         return morningWorkoutTime;
     }
 
+    //continue working on Mid-day functionality
     
     suggestedMidDayWorkoutTime(singleDayEvents, workoutTimeAmount) {
         
