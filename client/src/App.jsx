@@ -100,11 +100,11 @@ export default class App extends Component {
   render() {
    console.log('Render App');
 
-  //  if(activeStep === 1) {
-  //    return (
-  //      <Authorize />
-  //    )
-  //  }
+   if(activeStep === 1) {
+     return (
+       <Authorize />
+     )
+   }
    return (
       <div>
         <div>
