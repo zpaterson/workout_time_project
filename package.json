@@ -4,5 +4,8 @@
   },
   "devDependencies": {
     "jest": "^23.1.0"
+  },
+  "scripts": {
+    "start": "cd client && npm start && cd ../server && npm start"
   }
 }
